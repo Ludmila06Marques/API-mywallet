@@ -1,25 +1,25 @@
 import express from "express"
 import cors from "cors"
-import dotenv from "dotenv"
-import {MongoClient} from "mongodb"
 import joi from 'joi'
 import bcrypt from 'bcrypt';
 import {v4 as uuid} from "uuid"
-
-dotenv.config()
-let db= null
-const index=express()
-index.use(express.json())
-index.use(cors())
-
-const cliente= new MongoClient(process.env.URL_MONGO)
-cliente.connect().then(()=>{
-db=cliente.db(process.env.MY_WALLET_API)
-})
+import appRouter from './routes/appRoutes.js'
+import authRouter from './routes/authRoutes.js'
+import validateuser from "./middlewares/validateUser.js";
 
 
 
+const app=express()
+app.use(express.json())
+app.use(cors())
 
-		index.listen(5000 ,()=>{
+
+app.use(authRouter)
+app.use(validateuser,appRouter)
+
+
+
+
+		app.listen(process.env.PORT ,()=>{
 		    console.log("ta funfando")
 		})
