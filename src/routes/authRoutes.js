@@ -3,9 +3,11 @@ import { createUser } from "../controllers/authController.js";
 import { loginuser } from "../controllers/authController.js";
 
 
+
 const router =Router()
 
-router.post('/sing-up',createUser)
-router.post('/sing-in',loginuser)
+router.post('/sign-up',createUser)
+router.post('/sign-in',loginuser)
+
 
 export default router;

@@ -1,23 +1,14 @@
 import {db} from "../dbStrategy/mongo.js"
-import joi from "joi"
 import bcrypt from 'bcrypt';
 import {v4 as uuid} from "uuid"
+import { userSchema , loginSchema } from "../Schemas/authSchema.js";
 //saldo iniciada em 0
 
 export async function createUser(req,res){
     const usuario=req.body
-    const userSchema=joi.object({
-        email:joi.string().email().required(),
-       name:joi.string().required(),
-        password:joi.string().required(),
-        confirm:joi.string().required(),
-        saldo:joi.number()
 
-
-    })
     const { error } = userSchema.validate(usuario) 
     if (error) {
-        console.log(error)
         return res.sendStatus(422)
     } 
   
@@ -52,11 +43,7 @@ try {
 
 export async function loginuser(req,res){
   const usuario=req.body
-    const loginSchema=joi.object({
-        email:joi.string().email().required(),
-        password:joi.string().required()
-
-    })
+   
     const { error } = loginSchema.validate(usuario) 
     if (error) {
         console.log(error)
@@ -72,7 +59,7 @@ export async function loginuser(req,res){
     if(userExist && bcrypt.compareSync(usuario.password , userExist.password)){
 
         const token= uuid()
-        await db.collection('sessoes').insertOne({token , userId:userExist._id  , saldo:0})
+        await db.collection('sessoes').insertOne({token , userId:userExist._id })
       
         
         return   res.status(201).send({token , userExist })
