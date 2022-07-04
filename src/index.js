@@ -4,7 +4,7 @@ import appRouter from './routes/appRoutes.js'
 import authRouter from './routes/authRoutes.js'
 
 
-
+//https://git.heroku.com/drivenmywallet.git
 
 const app=express()
 app.use(express.json())
@@ -15,8 +15,7 @@ app.use(authRouter)
 app.use(appRouter)
 
 
-const PORT= process.env.PORT||5008
 
-		app.listen(PORT ,()=>{
+		app.listen(process.env.PORT ,()=>{
 		    console.log("ta funfando")
 		})

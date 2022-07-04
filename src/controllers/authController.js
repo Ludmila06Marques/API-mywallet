@@ -2,7 +2,7 @@ import {db} from "../dbStrategy/mongo.js"
 import bcrypt from 'bcrypt';
 import {v4 as uuid} from "uuid"
 import { userSchema , loginSchema } from "../Schemas/authSchema.js";
-//saldo iniciada em 0
+
 
 export async function createUser(req,res){
     const usuario=req.body
